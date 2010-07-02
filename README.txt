@@ -65,4 +65,7 @@ Testing
    are Actors and async. Difficult to test this with mocking but perhaps some mock guru can help
    me out to improve tests. It important that we use good test examples as well since this can
    be hard. Perhaps we can make use of Johan and Jans framwork for async testing.
+   
+   This means that you need resin running on default port during tests... hmmmm sorry about that :-(
+   Will be fixed...
  
