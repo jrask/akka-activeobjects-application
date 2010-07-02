@@ -27,8 +27,7 @@
   <akka:camel-service>
     <akka:camel-context ref="camelContext" />
   </akka:camel-service>
- 
-  <akka:active-object id="sample" target="se.scalablesolutions.helloworld.SamplePojo" timeout="1000" />
+
 
 <!-- <bean id="matchRegistry" class="se.scalablesolutions.akkasports.internal.MatchRegistry" scope="singleton"/>
  -->
