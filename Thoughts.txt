@@ -1,0 +1,44 @@
+
+
+ [Misc]
+ * Patterns, Better best practices?
+ * Annotation for methods that should be "actor" calls, or not "actor" calls?!
+   - Solution, use interfaces!
+ * What is the best way of implementing request/reply without using a blocking method?
+ 
+ [Lessons learned]
+ 
+ * Keep timeout LOW during development. You might call blocking methods without thinking about it.
+ * Do not call internal non private methods if you are not using the interface when creating the actor
+ * If you need to call public methods from within a class, create a private doSomething() method
+   that you delegate to from the public method. Only applicable if you are not creating your actor
+   with an interface.
+ * Perhaps TO transparent, think JMS (or Akka) not normal java development. 
+ * Difficult to use subclassing since we must have protected methods which are proxied
+   - Aha, this can be solved by supplying an interface so only those methods are Actorified
+   - May be a good idea to always use an Actor interface for you classes. Performance difference?
+ * May be a good idea to think more scala-akka. receive(CommandOrCallback) instead of many
+   small methods.
+ 
+ [Bugs and enhancements]
+ * Transactions and nested public methods does not seem to work or I do not understand what to do...
+   - Hmm, this works if I use transactional="true" on MatchActor but false on MatchRegistry when
+     invoking createMatch on MatchRegistry.
+ * Only exact methods (argument types) when using remote actors 
+ * akka-spring: pre/post construction callbacks is missing
+ * akka-spring: set dependencies does not work if method is not defined in interface. Has to be invoked
+   on target instance, not on active object.
+ * ActiveObject - Supervision does not work when using an interface. Will try to isolate this in smaller
+   testcase.
+ 
+ [Strange things]
+ * Redis: Base64 is unreadable from the console with external tools! Really hard
+   to see what i stored.
+ 
+ [Questions]
+ 
+ * How do I stop a Java actor and remove it from registry?
+ * Hook into start method?
+ * Redis, which persistence solution (map, vector, set). Missing remove or list/get methods?
+ * Can I supply some logic into the supervisor which can do some extra stuff?
+ * How do I use logging from java?
