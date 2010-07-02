@@ -13,6 +13,11 @@ import se.scalablesolutions.akkasports.MatchActor;
 import se.scalablesolutions.akkasports.NewMatchEvent;
 
 /**
+ * This class becomes a bottleneck since calls must go through this class
+ * both to create matches as well as fetch matches.
+ * 
+ * This was a regular bean where state was guarded by a synchronized map first but
+ * was turned to an actor when I tried to add persistency.
  * 
  * @author johanrask
  *
