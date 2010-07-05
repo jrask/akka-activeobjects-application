@@ -55,13 +55,15 @@ public class MatchActorImpl implements MatchActor {
 	}
 	
 	private boolean hasKey(String key) {
+		
+		return matchState.contains(key.getBytes());
 		//Extremely ugly method, could not figure out how to check None.
-		try {
-			matchState.get(key.getBytes()).get();
-			return true;
-		} catch(NoSuchElementException e) {
-			return false;
-		}
+//		try {
+//			matchState.get(key.getBytes()).get();
+//			return true;
+//		} catch(NoSuchElementException e) {
+//			return false;
+//		}
 	}
 	
 	/**
@@ -93,11 +95,9 @@ public class MatchActorImpl implements MatchActor {
 	 */
 	public void create(String uid,String home,String away,boolean readIfExists) {
 		doInit(uid);
-		if(hasKey(KEY_HOME)) {
-			if(!readIfExists) {
-				throw new RuntimeException("ALREADY EXISTS:" + uid + ", home = " + get(KEY_HOME));				
-			}
-			return;
+			
+		if(hasKey(KEY_AWAY)) {
+			throw new RuntimeException("Match with " + uid + " already exists " + get(KEY_AWAY));
 		}
 		put(KEY_HOME,home);
 		put(KEY_AWAY,away);
@@ -184,6 +184,14 @@ public class MatchActorImpl implements MatchActor {
 		if(listener != null) {
 			listener.handleEvent(event);
 		}
+	}
+
+	@Override
+	public void testMap() {
+		System.out.println(Thread.currentThread() + " - " + new String(matchState.get(KEY_HOME.getBytes()).get()));
+		System.out.println(Thread.currentThread() + " - " + new String(matchState.get(KEY_HOME.getBytes()).get()));
+		System.out.println(Thread.currentThread() + " - " + new String(matchState.get(KEY_HOME.getBytes()).get()));
+		System.out.println(Thread.currentThread() + " - " + new String(matchState.get(KEY_HOME.getBytes()).get()));
 	}
 	
 

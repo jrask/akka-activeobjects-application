@@ -4,15 +4,20 @@ import static org.junit.Assert.assertEquals;
 import static se.scalablesolutions.akka.actor.ActiveObject.link;
 import static se.scalablesolutions.akka.actor.ActiveObject.newInstance;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import se.scalablesolutions.akka.actor.ActiveObject;
 import se.scalablesolutions.akka.config.OneForOneStrategy;
 import se.scalablesolutions.akka.remote.RemoteNode;
 import se.scalablesolutions.akka.remote.RemoteServer;
+import se.scalablesolutions.akkasports.internal.MatchActorImpl;
 
 
 /**
@@ -23,20 +28,24 @@ import se.scalablesolutions.akka.remote.RemoteServer;
 public class VerifyBugsOrStrangeBehaviourTest {
 
 	static RemoteServer remoteServer;
+	static ClassPathXmlApplicationContext ctx;
+	
 	
 	@BeforeClass
 	public static void setup() {
 		remoteServer = RemoteNode.start("localhost", 9998);
+		ctx = new ClassPathXmlApplicationContext("myPersistentPojoCtx.xml");		
 	}
 	
 	@AfterClass
 	public static void shutdown() {
+	
 		remoteServer.shutdown();
 	}
 	
 	/**
 	 * Verifies that normal actors work as expected
-	 */
+	// */
 	@Test
 	public void verifyActorsWork() throws InterruptedException {
 		
@@ -86,4 +95,6 @@ public class VerifyBugsOrStrangeBehaviourTest {
 		Assert.assertTrue(pojo.pre);
 		Assert.assertTrue(pojo.post);
 	}
+	
+	
 }

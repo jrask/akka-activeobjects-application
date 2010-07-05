@@ -1,10 +1,9 @@
-
-
  [Misc]
  * Patterns, Better best practices?
  * Annotation for methods that should be "actor" calls, or not "actor" calls?!
    - Solution, use interfaces!
  * What is the best way of implementing request/reply without using a blocking method?
+ * I need to lookup stuff in redis, should i Implement the lookup with lucene?
  
  [Lessons learned]
  

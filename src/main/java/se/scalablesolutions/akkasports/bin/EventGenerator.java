@@ -21,7 +21,7 @@ public class EventGenerator {
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
 		EventGenerator gen = new EventGenerator();
-		gen.generateEvents("MATCH", 1, 2);
+		gen.generateEvents("MATCH", 1, 100);
 		//Thread.sleep(5000);
 		//gen.generateComments(100);
 		//gen.generateGoals(100);

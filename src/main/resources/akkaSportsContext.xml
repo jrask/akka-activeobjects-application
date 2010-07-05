@@ -37,7 +37,7 @@
 	<akka:active-object id="match" interface="se.scalablesolutions.akkasports.MatchActor"
 		target="se.scalablesolutions.akkasports.internal.MatchActorImpl"
 		transactional="true" timeout="1000" scope="prototype">
-		<!-- property name="listener" ref="counter" /-->
+		<!-- <property name="listener" ref="counter" />-->
 	</akka:active-object>
 
 	<bean id="counter" class="se.scalablesolutions.akkasports.internal.MatchEventTracker"/>

@@ -9,4 +9,5 @@ public interface MatchActor {
 	public List<String> getComments();
 	public String getUid();
 	public void init(String uid);
+	public void testMap();
 }
