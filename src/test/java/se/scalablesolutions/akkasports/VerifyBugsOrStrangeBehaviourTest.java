@@ -28,13 +28,11 @@ import se.scalablesolutions.akkasports.internal.MatchActorImpl;
 public class VerifyBugsOrStrangeBehaviourTest {
 
 	static RemoteServer remoteServer;
-	static ClassPathXmlApplicationContext ctx;
 	
 	
 	@BeforeClass
 	public static void setup() {
 		remoteServer = RemoteNode.start("localhost", 9998);
-		ctx = new ClassPathXmlApplicationContext("myPersistentPojoCtx.xml");		
 	}
 	
 	@AfterClass
