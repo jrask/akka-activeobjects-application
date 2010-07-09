@@ -12,8 +12,8 @@ public class NewMatchEvent extends MatchEvent {
 	String teamHomeUid;
 	String teamAwayUid;
 	
-	public NewMatchEvent(String uid,String teamHomeUid,String awayUid){
-		super(uid);
+	public NewMatchEvent(String ticket,String uid,String teamHomeUid,String awayUid){
+		super(ticket,uid);
 		this.teamHomeUid = teamHomeUid;
 		this.teamAwayUid = awayUid;
 	}

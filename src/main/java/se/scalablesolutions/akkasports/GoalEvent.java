@@ -12,8 +12,8 @@ public class GoalEvent extends MatchEvent{
 		return Type.GOAL;
 	}
 	
-	public GoalEvent(String matchUid, String teamUid,String score) {
-		super(matchUid);
+	public GoalEvent(String ticket,String matchUid, String teamUid,String score) {
+		super(ticket,matchUid);
 		this.teamUid = teamUid;
 		this.score = score;
 	}

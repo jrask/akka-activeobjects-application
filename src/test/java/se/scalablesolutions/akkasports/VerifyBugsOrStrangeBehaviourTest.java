@@ -4,20 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static se.scalablesolutions.akka.actor.ActiveObject.link;
 import static se.scalablesolutions.akka.actor.ActiveObject.newInstance;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import se.scalablesolutions.akka.actor.ActiveObject;
 import se.scalablesolutions.akka.config.OneForOneStrategy;
 import se.scalablesolutions.akka.remote.RemoteNode;
 import se.scalablesolutions.akka.remote.RemoteServer;
-import se.scalablesolutions.akkasports.internal.MatchActorImpl;
 
 
 /**
@@ -39,6 +34,11 @@ public class VerifyBugsOrStrangeBehaviourTest {
 	public static void shutdown() {
 	
 		remoteServer.shutdown();
+	}
+	
+	@Test
+	public void compareBytes() {
+		Assert.assertEquals("KEY".getBytes(), "KEY".getBytes());
 	}
 	
 	/**

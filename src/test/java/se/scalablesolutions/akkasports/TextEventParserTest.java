@@ -48,22 +48,22 @@ static ClassPathXmlApplicationContext ctx;
 	
 	@Test
 	public void testParseIllegalString() throws Exception{
-		parser.parse("sdfsdf:asdf");
+		parser.parse("","sdfsdf:asdf");
 		Thread.sleep(100);
 		assertEquals(0,registry.getMatches().size());
 	}
 	
 	@Test
 	public void testParseNewGame() throws Exception{
-		parser.parse(String.format("NEW:%s:MFF:HIF",uid));
+		parser.parse("",String.format("NEW:%s:MFF:HIF",uid));
 		Thread.sleep(100);
 		assertEquals(1,registry.getMatches().size());
 	}
 	
 	@Test
 	public void testParseNewComment() throws Exception{
-		parser.parse(String.format("NEW:%s:MFF:HIF",uid));
-		parser.parse(String.format("COMMENT:%s:COMMENT",uid));
+		parser.parse("",String.format("NEW:%s:MFF:HIF",uid));
+		parser.parse("",String.format("COMMENT:%s:COMMENT",uid));
 		Thread.sleep(100);
 		assertEquals(1,registry.getMatches().size());
 		MatchActor match = registry.getMatch(uid);
@@ -73,8 +73,8 @@ static ClassPathXmlApplicationContext ctx;
 	
 	@Test
 	public void testParseNewGoal() throws Exception{
-		parser.parse(String.format("NEW:%s:MFF:HIF",uid));
-		parser.parse(String.format("GOAL:%s:MFF:1-0",uid));
+		parser.parse("",String.format("NEW:%s:MFF:HIF",uid));
+		parser.parse("",String.format("GOAL:%s:MFF:1-0",uid));
 		Thread.sleep(100);
 		assertEquals(1,registry.getMatches().size());
 		MatchActor match = registry.getMatch(uid);
@@ -84,18 +84,18 @@ static ClassPathXmlApplicationContext ctx;
 	@Test(expected = RuntimeException.class)
 	public void testParseNewMatchWithoutActor() throws Exception{
 		TextEventParser parser = new TextEventParser();
-		parser.parse("sdfsdf:asdf");
+		parser.parse("","sdfsdf:asdf");
 	}
 	
 	@Test(expected = RuntimeException.class)
 	public void testParseIllegalStringWithoutActor() throws Exception{
 		TextEventParser parser = new TextEventParser();
-		parser.parse("sdfsdfasdf");
+		parser.parse("","sdfsdfasdf");
 	}
 	
 	@Test(expected = NullPointerException.class)
 	public void testParseNullWithoutActor() throws Exception{
 		TextEventParser parser = new TextEventParser();
-		parser.parse(null);
+		parser.parse("",null);
 	}
 }

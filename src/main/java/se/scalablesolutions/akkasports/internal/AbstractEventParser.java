@@ -7,7 +7,8 @@ import org.springframework.context.ApplicationContextAware;
 import se.scalablesolutions.akkasports.EventParser;
 import se.scalablesolutions.akkasports.MatchActor;
 import se.scalablesolutions.akkasports.MatchEvent;
-import se.scalablesolutions.akkasports.MatchEventListener;
+import se.scalablesolutions.akkasports.MatchEventProcessingFailedException;
+import se.scalablesolutions.akkasports.MatchEventTracker;
 import se.scalablesolutions.akkasports.NewMatchEvent;
 
 /**
@@ -23,13 +24,14 @@ public abstract class AbstractEventParser implements EventParser,ApplicationCont
 	protected ApplicationContext ctx;
 	
 	private MatchRegistry registry;
-	private MatchEventListener tracker;
+	
+	private MatchEventTracker tracker;
 	
 	public void setRegistry(MatchRegistry registry) {
 		this.registry = registry;
 	}
-	
-	public void setTracker(MatchEventListener tracker) {
+		
+	public void setTracker(MatchEventTracker tracker) {
 		this.tracker = tracker;
 	}
 	
@@ -44,6 +46,7 @@ public abstract class AbstractEventParser implements EventParser,ApplicationCont
 	// Hmm... this method is not called in the same thread.
 	// How can this be avoided?
 	protected void delegate(MatchEvent event) {
+		tracker.addEvent(event);
 		if(event instanceof NewMatchEvent) {
 			registry.createMatch((NewMatchEvent)event);
 			return;
@@ -51,8 +54,8 @@ public abstract class AbstractEventParser implements EventParser,ApplicationCont
 		
 		MatchActor match = registry.getMatch(event.getUid());
 		if(match == null) {
-			tracker.handleFailedEvent(event);
-			throw new RuntimeException("Unable to find Match uid: " + event.getUid());
+			throw new MatchEventProcessingFailedException(event,
+					"Unable to find Match uid: " + event.getUid());
 		} else {
 			match.handleMatchEvent(event);
 		}		
@@ -67,7 +70,7 @@ public abstract class AbstractEventParser implements EventParser,ApplicationCont
 	 * a Future.
 	 */
 	@Override
-	public abstract void parse(String event);
+	public abstract void parse(String event,String ticket);
 
 	
 

@@ -11,8 +11,8 @@ public class CommentEvent extends MatchEvent {
 		return Type.COMMENT;
 	}
 
-	public CommentEvent(String uid,String comment) {
-		super(uid);
+	public CommentEvent(String ticket,String uid,String comment) {
+		super(ticket,uid);
 		this.comment = comment;
 	}
 

@@ -23,7 +23,7 @@ public class Start {
 		ctx = new ClassPathXmlApplicationContext("akkaSportsContext.xml");	
 		
 		
-		RedisStorageBackend.flushDB();
+		//RedisStorageBackend.flushDB();
 		
 		//final MatchRegistry registry = (MatchRegistry)ctx.getBean("matchRegistry");
 	}

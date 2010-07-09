@@ -36,19 +36,23 @@
 
 	<akka:active-object id="match" interface="se.scalablesolutions.akkasports.MatchActor"
 		target="se.scalablesolutions.akkasports.internal.MatchActorImpl"
-		transactional="true" timeout="1000" scope="prototype">
+		transactional="false" timeout="1000" scope="prototype">
 		<!-- <property name="listener" ref="counter" />-->
 	</akka:active-object>
 
-	<bean id="counter" class="se.scalablesolutions.akkasports.internal.MatchEventTracker"/>
+ 	<bean id="tracker" class="se.scalablesolutions.akkasports.internal.MatchEventTrackerImpl"/>  
 
-<!-- 
-	<akka:active-object id="counter"
-		target="se.scalablesolutions.akkasports.internal.MatchEventCounter"
+
+	<bean id="receiver" class="se.scalablesolutions.akkasports.internal.EventReceiver">
+		<property name="parser" ref="router"/>
+	</bean>
+ 
+<!-- 	<akka:active-object id="tracker"
+		target="se.scalablesolutions.akkasports.internal.MatchEventTrackerImpl"
 		transactional="false" timeout="10000" scope="singleton">
 
 	</akka:active-object>
--->
+ -->
 
 	<akka:active-object id="router"
 		target="se.scalablesolutions.akkasports.internal.EventParserRouter"
@@ -76,15 +80,15 @@
 		target="se.scalablesolutions.akkasports.internal.TextEventParser"
 		transactional="false" timeout="1000" scope="prototype">
 		<property name="registry" ref="matchRegistry" />
-		<property name="tracker" ref="counter"/>
+		<property name="tracker" ref="tracker"/>
 	</akka:active-object>
 
 
-	<bean class="se.scalablesolutions.akkasports.supervision.ClassnameSupervisorBeanPostProcessor">
+	<bean id="supervisorBeanPostProcessor" class="se.scalablesolutions.akkasports.supervision.ClassnameSupervisorBeanPostProcessor">
 		<constructor-arg>
 			<util:list>
 				<value>se.scalablesolutions.akkasports.internal.TextEventParser</value>
-				<!-- <value>se.scalablesolutions.akkasports.MatchActor</value> -->
+				<!-- <value>se.scalablesolutions.akkasports.internal.MatchRegistry</value>-->
 			</util:list>
 		</constructor-arg>
 	</bean>

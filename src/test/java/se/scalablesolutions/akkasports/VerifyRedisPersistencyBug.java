@@ -29,12 +29,12 @@ public class VerifyRedisPersistencyBug {
 		MyPersistentPojo[] pojos = new MyPersistentPojo[100];
 		
 		for(int i = 0; i < 100; i++) {
-			MyPersistentPojo actor = ActiveObject.newInstance(MyPersistentPojo.class, 10000, true);
+			MyPersistentPojo actor = ActiveObject.newInstance(MyPersistentPojo.class, 10000, false);
 			actor.create("uuid." + i, "value-" + i);
 			pojos[i] = actor;
 			
 			// Remove this for the error to occur
-			Thread.sleep(30);
+			//Thread.sleep(30);
 		}
 		
 		// Make sure that it finishes

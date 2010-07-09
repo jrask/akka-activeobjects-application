@@ -7,10 +7,13 @@ import static se.scalablesolutions.akka.actor.ActiveObject.trapExit;
 
 import java.util.List;
 
+import javax.annotation.PreDestroy;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
+import se.scalablesolutions.akka.actor.ActiveObject;
 import se.scalablesolutions.akka.config.OneForOneStrategy;
 import se.scalablesolutions.akka.spring.ActiveObjectFactoryBean;
 
@@ -51,14 +54,15 @@ public class ClassnameSupervisorBeanPostProcessor implements BeanPostProcessor {
 		return actor;
 	}
 
+	
 	private void linkWithSupervisor(Class<?> clazz, Object actor) {
 		if(clazz.isAssignableFrom(actor.getClass())) {
 			if(actor instanceof ActiveObjectFactoryBean) {
-				try {
-					actor = ((FactoryBean<?>)actor).getObject();
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
+//				try {
+//					actor = ((FactoryBean<?>)actor).getObject();
+//				} catch (Exception e) {
+//					throw new RuntimeException(e);
+//				}
 			}
 			System.out.println("**** Linking supervisor with actor " + actor.getClass());
 			link(supervisor, actor);	

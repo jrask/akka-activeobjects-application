@@ -2,6 +2,7 @@ package se.scalablesolutions.akkasports.internal;
 
 import se.scalablesolutions.akka.actor.annotation.postrestart;
 import se.scalablesolutions.akka.actor.annotation.prerestart;
+import se.scalablesolutions.akka.actor.annotation.shutdown;
 import se.scalablesolutions.akkasports.CommentEvent;
 import se.scalablesolutions.akkasports.GoalEvent;
 import se.scalablesolutions.akkasports.MatchEvent;
@@ -9,39 +10,34 @@ import se.scalablesolutions.akkasports.NewMatchEvent;
 
 public class TextEventParser extends AbstractEventParser {
     
-	// MATCH:MATCHID:TEAMID:TEAMID
-	// GOAL:MATCHID:TEAMID:1-1
-	// COMMENT:MATCHID:STRING
 	@Override
-	public void parse(String event) {	
+	public void parse(String event,String ticket) {	
 		
-		//System.out.println("parse() "  +toString());
+		//Add some extra processing
+//		for(int i = 0; i < 100;i++) {
+//			for(byte b : event.getBytes()) {
+//				event.replace(":", new String(new byte[]{b}));
+//			}
+//		}
+		
 		String[]str = event.split(":");
 		System.out.println("UID:" + str[1]);
 		if(str[0].equals(MatchEvent.Type.COMMENT.name())) {
-			parseComment(str);
+			delegate(new CommentEvent(ticket,str[1],str[2]));
 		} else if(str[0].equals(MatchEvent.Type.GOAL.name())){
-			parseGoal(str);
+			delegate(new GoalEvent(ticket,str[1],str[2],str[3]));
 		} else if(str[0].equals(MatchEvent.Type.NEW.name())) {
-			parseNewMatch(str);
+			delegate(new NewMatchEvent(ticket,str[1], str[2], str[3]));
 		}
 		else {
 			System.out.println("Failed: "  +Thread.currentThread().getName());
 			throw new RuntimeException("Unknown type: " + str[0] + " ("+Thread.currentThread().getName() + ")");
 		}
 	}
-    
-	private void parseNewMatch(String[] str) {
-		delegate(new NewMatchEvent(str[1], str[2], str[3]));
-	}
-	
-	
-	private void parseGoal(String[] str) {
-		delegate(new GoalEvent(str[1],str[2],str[3]));
-	}
-
-	private void parseComment(String[] str) {
-		delegate(new CommentEvent(str[1],str[2]));
+    	
+	@shutdown
+	public void shutdown() {
+		System.out.println("* * * * TextEventParser.shutdown()");
 	}
 	
 	@prerestart

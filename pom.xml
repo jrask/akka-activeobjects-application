@@ -87,7 +87,13 @@
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
 		</dependency>
+
 		<dependency>
+    <groupId>commons-pool</groupId>
+    <artifactId>commons-pool</artifactId>
+    <version>1.5.4</version>
+</dependency>
+		<dependency>		
     <groupId>org.mockito</groupId>
     <artifactId>mockito-all</artifactId>
     <version>1.8.5</version>
@@ -112,6 +118,14 @@
 			<name>Google Repo</name>
 			<url>http://guiceyfruit.googlecode.com/svn/repo/releases</url>
 		</repository>
+		 <repository>
+      <id>repository.codehaus.org</id>
+      <name>Codehaus Maven Repository</name>
+      <url>http://repository.codehaus.org</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
 	</repositories>
 	<build>
 		<plugins>
